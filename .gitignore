@@ -1,0 +1,3 @@
+# ignore OS/git artifacts only
+.vscode/
+.DS_Store

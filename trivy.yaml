@@ -1,0 +1,15 @@
+vulnerability:
+  ignore-unfixed: true
+  ignorefile: .trivyignore
+
+# don't skip config/ — we want to detect secrets in config/
+misconfiguration:
+  skip-dirs: []
+
+secret:
+  enabled: true
+
+scan:
+  severity:
+    - CRITICAL
+    - HIGH
