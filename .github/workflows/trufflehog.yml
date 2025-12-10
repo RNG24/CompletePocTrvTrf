@@ -6,15 +6,21 @@ on:
   pull_request:
 
 jobs:
-  trufflehog-scan:
+  trufflehog:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run TruffleHog (filesystem scan)
+      - name: Install TruffleHog
         run: |
-          docker run --rm \
-            -v "${{ github.workspace }}:/src" \
-            trufflesecurity/trufflehog:latest \
-            filesystem /src --fail
+          curl -L https://github.com/trufflesecurity/trufflehog/releases/latest/download/trufflehog_$(uname -s)_$(uname -m) \
+            -o trufflehog
+          chmod +x trufflehog
+
+      - name: Run TruffleHog
+        run: |
+          ./trufflehog filesystem . \
+            --fail \
+            --only-verified=false \
+            --exclude-paths .trufflehogignore
