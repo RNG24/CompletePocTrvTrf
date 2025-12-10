@@ -2,7 +2,7 @@ name: TruffleHog Scan
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
 
 jobs:
@@ -12,11 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run TruffleHog (Docker)
+      - name: Run TruffleHog (filesystem scan)
         run: |
           docker run --rm \
-            -v "${{ github.workspace }}":/src \
+            -v "${{ github.workspace }}:/src" \
             trufflesecurity/trufflehog:latest \
-            filesystem /src \
-            --only-verified=false \
-            --fail
+            filesystem /src --fail
