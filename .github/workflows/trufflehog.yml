@@ -8,9 +8,15 @@ on:
 jobs:
   trufflehog-scan:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Run TruffleHog (Docker)
         run: |
-          docker run --rm -v "${{ github.workspace }}":/src trufflesecurity/trufflehog:latest filesystem /src --no-verify --only-verified=false
+          docker run --rm \
+            -v "${{ github.workspace }}":/src \
+            trufflesecurity/trufflehog:latest \
+            filesystem /src \
+            --only-verified=false \
+            --fail
